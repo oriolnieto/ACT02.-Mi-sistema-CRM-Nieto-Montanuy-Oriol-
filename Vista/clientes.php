@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>CRM - Clientes</title>
+    <title>PaddockCRM / Clientes</title>
 </head>
 <body>
     <nav>
@@ -52,7 +52,7 @@
                         <a href="index.php?ruta=cliente-eliminar&id=<?= $cliente['id_cliente'] ?>">Eliminar</a>
                     </td>
             </tr>
-        <?php } ?>
+        <?php }?>
     </table>
 </body>
 </html>

@@ -88,11 +88,11 @@
                             <a href="index.php?ruta=usuario-eliminar&id=<?= $usuario['id_usuario'] ?>">
                                 Eliminar
                             </a>
-                        <?php } ?>
+                        <?php }?>
                     </td>
                 </tr>
-            <?php } ?>
+            <?php }?>
         </table>
-    <?php } ?>
+    <?php }?>
 </body>
 </html>

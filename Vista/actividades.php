@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>CRM - Actividades</title>
+    <title>PaddockCRM / Actividades</title>
 </head>
 <body>
     <nav>
@@ -12,7 +12,7 @@
         <a href="index.php?ruta=actividades">Actividades</a>
         <?php if ($_SESSION['rol'] === 'admin') { ?> |
             <a href="index.php?ruta=usuarios">Usuarios</a>
-        <?php } ?> |
+        <?php } ?>
         <a href="index.php?ruta=logout">Cerrar sesión</a>
     </nav>
     <hr>
@@ -69,3 +69,8 @@
     </table>
 </body>
 </html>
+
+
+
+
+
