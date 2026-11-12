@@ -21,14 +21,10 @@ class Actividad {
         global $conexion;
         $oportunidad = $datos['id_oportunidad'] !== '' ? (int)$datos['id_oportunidad'] : 0;
         $cliente = $datos['id_cliente'] !== '' ? (int)$datos['id_cliente'] : 0;
-        $opSql = $oportunidad ? '?' : 'NULL';
-        $clienteSql = $cliente ? '?' : 'NULL';
-        $stmt = $conexion->prepare("INSERT INTO actividades (id_oportunidad,id_cliente,descripcion,fecha,estado,usuario_responsable) VALUES ($opSql,$clienteSql,?,?,'pendiente',?)");
-        if ($oportunidad && $cliente) $stmt->bind_param('iissi', $oportunidad, $cliente, $datos['descripcion'], $datos['fecha'], $datos['usuario_responsable']);
-        elseif ($oportunidad) $stmt->bind_param('issi', $oportunidad, $datos['descripcion'], $datos['fecha'], $datos['usuario_responsable']);
-        elseif ($cliente) $stmt->bind_param('issi', $cliente, $datos['descripcion'], $datos['fecha'], $datos['usuario_responsable']);
-        else $stmt->bind_param('ssi', $datos['descripcion'], $datos['fecha'], $datos['usuario_responsable']);
-        return $stmt->execute();
+        $oportunidadSql = $oportunidad ? $oportunidad : 'NULL';
+        $clienteSql = $cliente ? $cliente : 'NULL';
+        $sql = "INSERT INTO actividades (id_oportunidad,id_cliente,descripcion,fecha,estado,usuario_responsable) VALUES ($oportunidadSql,$clienteSql,'{$datos['descripcion']}','{$datos['fecha']}','pendiente',{$datos['usuario_responsable']})";
+        return (bool)$conexion->query($sql);
     }
 
     public static function completar($id, $usuarioId, $esAdmin) {

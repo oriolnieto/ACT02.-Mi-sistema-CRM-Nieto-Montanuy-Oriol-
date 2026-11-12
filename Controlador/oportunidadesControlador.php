@@ -2,7 +2,7 @@
 class OportunidadesControlador {
     public function listar() {
         AuthControlador::requiereLogin();
-        $admin = $_SESSION['rol'] === 'admin';
+        $admin = $_SESSION['rol'] == 'admin';
         $oportunidades = Oportunidad::todos($_SESSION['id_usuario'], $admin, isset($_GET['estado']) ? $_GET['estado'] : '', isset($_GET['cliente']) ? $_GET['cliente'] : '');
         $clientes = Cliente::todos($_SESSION['id_usuario'], $admin);
         require __DIR__ . '/../Vista/oportunidades.php';
@@ -10,7 +10,7 @@ class OportunidadesControlador {
 
     public function guardar() {
         AuthControlador::requiereLogin();
-        $admin = $_SESSION['rol'] === 'admin';
+        $admin = $_SESSION['rol'] == 'admin';
         $clienteId = (int)$_POST['id_cliente'];
 
         if (!Cliente::puedeGestionar($clienteId, $_SESSION['id_usuario'], $admin)) {
@@ -33,7 +33,7 @@ class OportunidadesControlador {
 
     public function eliminar() {
         AuthControlador::requiereLogin();
-        Oportunidad::eliminar((int)$_GET['id'], $_SESSION['id_usuario'], $_SESSION['rol'] === 'admin');
+        Oportunidad::eliminar((int)$_GET['id'], $_SESSION['id_usuario'], $_SESSION['rol'] == 'admin');
         header('Location: index.php?ruta=oportunidades'); exit;
     }
 
@@ -44,7 +44,7 @@ class OportunidadesControlador {
             exit;
         }
 
-        Oportunidad::cambiarEstado((int)$_POST['id'], $_POST['estado'], $_SESSION['id_usuario'], $_SESSION['rol'] === 'admin');
+        Oportunidad::cambiarEstado((int)$_POST['id'], $_POST['estado'], $_SESSION['id_usuario'], $_SESSION['rol'] == 'admin');
         header('Location: index.php?ruta=oportunidades'); exit;
     }
 }

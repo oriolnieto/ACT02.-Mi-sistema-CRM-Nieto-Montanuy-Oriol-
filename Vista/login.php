@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>CRM - Login</title></head><body>
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>PaddockCRM / Login</title></head><body>
 <h1>Iniciar sesión</h1>
 <?php if ($error) echo '<p>' . $error . '</p>'; ?>
 <form method="post" action="index.php?ruta=login">

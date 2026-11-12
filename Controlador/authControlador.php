@@ -8,7 +8,7 @@ class AuthControlador {
 
     public static function requiereAdmin() {
         self::requiereLogin();
-        if ($_SESSION['rol'] !== 'admin') {
+        if ($_SESSION['rol'] != 'admin') {
             header('Location: index.php?ruta=dashboard'); exit;
         }
     }
@@ -58,7 +58,7 @@ class AuthControlador {
         $totalClientes = Cliente::total();
         $oportunidades = Oportunidad::resumen();
         $actividadesPendientes = Actividad::pendientes();
-        $usuarios = $_SESSION['rol'] === 'admin' ? Usuario::todos() : [];
+        $usuarios = $_SESSION['rol'] == 'admin' ? Usuario::todos() : [];
         require __DIR__ . '/../Vista/dashboard.php';
     }
 

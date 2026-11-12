@@ -2,7 +2,7 @@
 class ActividadesControlador {
     public function listar() {
         AuthControlador::requiereLogin();
-        $admin = $_SESSION['rol'] === 'admin';
+        $admin = $_SESSION['rol'] == 'admin';
         $actividades = Actividad::todos($_SESSION['id_usuario'], $admin);
         $clientes = Cliente::todos($_SESSION['id_usuario'], $admin);
         $oportunidades = Oportunidad::todos($_SESSION['id_usuario'], $admin);
@@ -11,7 +11,7 @@ class ActividadesControlador {
 
     public function guardar() {
         AuthControlador::requiereLogin();
-        $admin = $_SESSION['rol'] === 'admin';
+        $admin = $_SESSION['rol'] == 'admin';
         $oportunidadId = (int)($_POST['id_oportunidad'] ?? 0);
         $clienteId = (int)($_POST['id_cliente'] ?? 0);
 
@@ -39,7 +39,7 @@ class ActividadesControlador {
 
     public function completar() {
         AuthControlador::requiereLogin();
-        Actividad::completar((int)$_GET['id'], $_SESSION['id_usuario'], $_SESSION['rol'] === 'admin');
+        Actividad::completar((int)$_GET['id'], $_SESSION['id_usuario'], $_SESSION['rol'] == 'admin');
         header('Location: index.php?ruta=actividades'); exit;
     }
 }

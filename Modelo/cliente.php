@@ -31,8 +31,8 @@ class Cliente {
                 $stmt->bind_param('ssssii', $datos['nombre_completo'], $datos['email'], $datos['tlf'], $datos['empresa'], $datos['id_cliente'], $usuarioId);
             }
         } else {
-            $stmt = $conexion->prepare("INSERT INTO clientes (nombre_completo,email,tlf,empresa,fecha_registro,usuario_responsable) VALUES (?,?,?,?,CURDATE(),?)");
-            $stmt->bind_param('ssssi', $datos['nombre_completo'], $datos['email'], $datos['tlf'], $datos['empresa'], $datos['usuario_responsable']);
+            $sql = "INSERT INTO clientes (nombre_completo,email,tlf,empresa,fecha_registro,usuario_responsable) VALUES ('{$datos['nombre_completo']}','{$datos['email']}','{$datos['tlf']}','{$datos['empresa']}',CURDATE(),{$datos['usuario_responsable']})";
+            return (bool)$conexion->query($sql);
         }
         return $stmt->execute();
     }

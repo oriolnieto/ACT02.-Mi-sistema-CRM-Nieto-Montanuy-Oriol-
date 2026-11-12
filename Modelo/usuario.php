@@ -14,9 +14,8 @@ class Usuario {
     public static function crear($datos) {
         global $conexion;
         $hash = password_hash($datos['password'], PASSWORD_DEFAULT);
-        $stmt = $conexion->prepare("INSERT INTO usuarios (usuario,nombre,apellidos,email,password,rol) VALUES (?,?,?,?,?,?)");
-        $stmt->bind_param('ssssss', $datos['usuario'], $datos['nombre'], $datos['apellidos'], $datos['email'], $hash, $datos['rol']);
-        return $stmt->execute();
+        $sql = "INSERT INTO usuarios (usuario,nombre,apellidos,email,password,rol) VALUES ('{$datos['usuario']}','{$datos['nombre']}','{$datos['apellidos']}','{$datos['email']}','$hash','{$datos['rol']}')";
+        return (bool)$conexion->query($sql);
     }
 
     public static function actualizar($datos) {

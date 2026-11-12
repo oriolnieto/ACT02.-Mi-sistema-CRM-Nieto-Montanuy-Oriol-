@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>CRM - Inicio</title>
+    <title>PaddockCRM / Inicio</title>
 </head>
 <body>
     <nav>
@@ -10,7 +10,7 @@
         <a href="index.php?ruta=clientes">Clientes</a> |
         <a href="index.php?ruta=oportunidades">Oportunidades</a> |
         <a href="index.php?ruta=actividades">Actividades</a>
-        <?php if ($_SESSION['rol'] === 'admin') { ?> |
+        <?php if ($_SESSION['rol'] == 'admin') { ?> |
             <a href="index.php?ruta=usuarios">Usuarios</a>
         <?php } ?> |
         <a href="index.php?ruta=logout">Cerrar sesión</a>
@@ -27,7 +27,7 @@
         <li>Actividades pendientes: <?= $actividadesPendientes ?></li>
     </ul>
 
-    <?php if ($_SESSION['rol'] === 'admin') { ?>
+    <?php if ($_SESSION['rol'] == 'admin') { ?>
         <h2>Gestión de usuarios</h2>
         <?php if (isset($error)) { ?>
             <p><?= $error ?></p>
@@ -76,7 +76,7 @@
                                 <option value="vendedor" <?= $usuario['rol'] === 'vendedor' ? 'selected' : '' ?>>
                                     Vendedor
                                 </option>
-                                <option value="admin" <?= $usuario['rol'] === 'admin' ? 'selected' : '' ?>>
+                                <option value="admin" <?= $usuario['rol'] == 'admin' ? 'selected' : '' ?>>
                                     Administrador
                                 </option>
                             </select>

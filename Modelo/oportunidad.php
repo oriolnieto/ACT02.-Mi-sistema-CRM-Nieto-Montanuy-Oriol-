@@ -58,8 +58,8 @@ class Oportunidad {
                 $stmt->bind_param('issdsii', $datos['id_cliente'], $datos['titulo'], $datos['descripcion'], $datos['valor_estimado'], $datos['estado'], $datos['id_oportunidad'], $usuarioId);
             }
         } else {
-            $stmt = $conexion->prepare("INSERT INTO oportunidades (id_cliente,titulo,descripcion,valor_estimado,estado,fecha_creacion,usuario_responsable) VALUES (?,?,?,?,?,CURDATE(),?)");
-            $stmt->bind_param('issdsi', $datos['id_cliente'], $datos['titulo'], $datos['descripcion'], $datos['valor_estimado'], $datos['estado'], $datos['usuario_responsable']);
+            $sql = "INSERT INTO oportunidades (id_cliente,titulo,descripcion,valor_estimado,estado,fecha_creacion,usuario_responsable) VALUES ({$datos['id_cliente']},'{$datos['titulo']}','{$datos['descripcion']}',{$datos['valor_estimado']},'{$datos['estado']}',CURDATE(),{$datos['usuario_responsable']})";
+            return (bool)$conexion->query($sql);
         }
         return $stmt->execute();
     }

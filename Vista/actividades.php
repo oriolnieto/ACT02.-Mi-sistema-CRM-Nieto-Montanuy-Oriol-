@@ -10,7 +10,7 @@
         <a href="index.php?ruta=clientes">Clientes</a> |
         <a href="index.php?ruta=oportunidades">Oportunidades</a> |
         <a href="index.php?ruta=actividades">Actividades</a>
-        <?php if ($_SESSION['rol'] === 'admin') { ?> |
+        <?php if ($_SESSION['rol'] == 'admin') { ?> |
             <a href="index.php?ruta=usuarios">Usuarios</a>
         <?php } ?>
         <a href="index.php?ruta=logout">Cerrar sesión</a>
@@ -69,7 +69,6 @@
     </table>
 </body>
 </html>
-
 
 
 
