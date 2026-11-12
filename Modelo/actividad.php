@@ -1,34 +1,36 @@
 <?php
 require_once __DIR__ . '/conexion.php';
 
-function actividad_pendientes() {
+class Actividad {
+public static function pendientes() {
     global $conexion;
-    $resultado = mysqli_query($conexion, "SELECT COUNT(*) total FROM actividades WHERE estado='pendiente'");
-    return (int)mysqli_fetch_assoc($resultado)['total'];
+    $resultado = $conexion->query("SELECT COUNT(*) total FROM actividades WHERE estado='pendiente'");
+    return (int)$resultado->fetch_assoc()['total'];
 }
 
-function actividad_todos($usuarioId, $esAdmin) {
+public static function todos($usuarioId, $esAdmin) {
     global $conexion;
     $sql = "SELECT a.*, o.titulo oportunidad FROM actividades a LEFT JOIN oportunidades o ON o.id_oportunidad=a.id_oportunidad";
     if (!$esAdmin) $sql .= " WHERE a.usuario_responsable=$usuarioId";
     $sql .= " ORDER BY a.estado, a.fecha";
-    return mysqli_fetch_all(mysqli_query($conexion, $sql), MYSQLI_ASSOC);
+    return $conexion->query($sql)->fetch_all(MYSQLI_ASSOC);
 }
 
-function actividad_guardar($datos) {
+public static function guardar($datos) {
     global $conexion;
     $oportunidad = $datos['id_oportunidad'] !== '' ? (int)$datos['id_oportunidad'] : 0;
     $cliente = $datos['id_cliente'] !== '' ? (int)$datos['id_cliente'] : 0;
     $oportunidadSql = $oportunidad ? $oportunidad : 'NULL';
     $clienteSql = $cliente ? $cliente : 'NULL';
     $sql = "INSERT INTO actividades (id_oportunidad,id_cliente,descripcion,fecha,estado,usuario_responsable) VALUES ($oportunidadSql,$clienteSql,'{$datos['descripcion']}','{$datos['fecha']}','pendiente',{$datos['usuario_responsable']})";
-    return (bool)mysqli_query($conexion, $sql);
+    return (bool)$conexion->query($sql);
 }
 
-function actividad_completar($id, $usuarioId, $esAdmin) {
+public static function completar($id, $usuarioId, $esAdmin) {
     global $conexion;
     $sql = $esAdmin
         ? "UPDATE actividades SET estado='completada' WHERE id_tarea=$id"
         : "UPDATE actividades SET estado='completada' WHERE id_tarea=$id AND usuario_responsable=$usuarioId";
-    return (bool)mysqli_query($conexion, $sql);
+    return (bool)$conexion->query($sql);
+}
 }

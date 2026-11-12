@@ -1,20 +1,21 @@
 <?php
 require_once __DIR__ . '/conexion.php';
 
-function usuario_autenticar($usuario, $password) {
+class Usuario {
+public static function autenticar($usuario, $password) {
     global $conexion;
-    $fila = mysqli_fetch_assoc(mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario = '$usuario'"));
+    $fila = $conexion->query("SELECT * FROM usuarios WHERE usuario = '$usuario'")->fetch_assoc();
     return $fila && password_verify($password, $fila['password']) ? $fila : null;
 }
 
-function usuario_crear($datos) {
+public static function crear($datos) {
     global $conexion;
     $hash = password_hash($datos['password'], PASSWORD_DEFAULT);
     $sql = "INSERT INTO usuarios (usuario,nombre,apellidos,email,password,rol) VALUES ('{$datos['usuario']}','{$datos['nombre']}','{$datos['apellidos']}','{$datos['email']}','$hash','{$datos['rol']}')";
-    return (bool)mysqli_query($conexion, $sql);
+    return (bool)$conexion->query($sql);
 }
 
-function usuario_actualizar($datos) {
+public static function actualizar($datos) {
     global $conexion;
     if ($datos['password'] !== '') {
         $hash = password_hash($datos['password'], PASSWORD_DEFAULT);
@@ -22,32 +23,33 @@ function usuario_actualizar($datos) {
     } else {
         $sql = "UPDATE usuarios SET usuario='{$datos['usuario']}',nombre='{$datos['nombre']}',apellidos='{$datos['apellidos']}',email='{$datos['email']}',rol='{$datos['rol']}' WHERE id_usuario={$datos['id_usuario']}";
     }
-    return (bool)mysqli_query($conexion, $sql);
+    return (bool)$conexion->query($sql);
 }
 
-function usuario_todos() {
+public static function todos() {
     global $conexion;
-    $resultado = mysqli_query($conexion, "SELECT id_usuario,usuario,nombre,apellidos,email,rol FROM usuarios ORDER BY id_usuario");
-    return $resultado ? mysqli_fetch_all($resultado, MYSQLI_ASSOC) : [];
+    $resultado = $conexion->query("SELECT id_usuario,usuario,nombre,apellidos,email,rol FROM usuarios ORDER BY id_usuario");
+    return $resultado ? $resultado->fetch_all(MYSQLI_ASSOC) : [];
 }
 
-function usuario_por_id($id) {
+public static function porId($id) {
     global $conexion;
-    return mysqli_fetch_assoc(mysqli_query($conexion, "SELECT id_usuario,usuario,nombre,apellidos,email,rol FROM usuarios WHERE id_usuario = $id"));
+    return $conexion->query("SELECT id_usuario,usuario,nombre,apellidos,email,rol FROM usuarios WHERE id_usuario = $id")->fetch_assoc();
 }
 
-function usuario_eliminar($id, $usuarioReceptor) {
+public static function eliminar($id, $usuarioReceptor) {
     global $conexion;
-    mysqli_begin_transaction($conexion);
+    $conexion->begin_transaction();
     try {
-        mysqli_query($conexion, "UPDATE clientes SET usuario_responsable=$usuarioReceptor WHERE usuario_responsable=$id");
-        mysqli_query($conexion, "UPDATE oportunidades SET usuario_responsable=$usuarioReceptor WHERE usuario_responsable=$id");
-        mysqli_query($conexion, "UPDATE actividades SET usuario_responsable=$usuarioReceptor WHERE usuario_responsable=$id");
-        mysqli_query($conexion, "DELETE FROM usuarios WHERE id_usuario=$id");
-        mysqli_commit($conexion);
+        $conexion->query("UPDATE clientes SET usuario_responsable=$usuarioReceptor WHERE usuario_responsable=$id");
+        $conexion->query("UPDATE oportunidades SET usuario_responsable=$usuarioReceptor WHERE usuario_responsable=$id");
+        $conexion->query("UPDATE actividades SET usuario_responsable=$usuarioReceptor WHERE usuario_responsable=$id");
+        $conexion->query("DELETE FROM usuarios WHERE id_usuario=$id");
+        $conexion->commit();
         return true;
     } catch (mysqli_sql_exception $error) {
-        mysqli_rollback($conexion);
+        $conexion->rollback();
         return false;
+    }
     }
 }

@@ -14,54 +14,57 @@ $ruta = isset($_GET['ruta']) ? $_GET['ruta'] : 'login';
 
 switch ($ruta) {
     case 'login':
-        login();
+        (new AuthControlador())->login();
         break;
     case 'registro':
-        registro();
+        (new AuthControlador())->registro();
         break;
     case 'logout':
-        logout();
+        (new AuthControlador())->logout();
         break;
     case 'dashboard':
-        dashboard();
+        (new AuthControlador())->dashboard();
         break;
     case 'usuarios':
-        usuarios();
+        (new AuthControlador())->usuarios();
         break;
     case 'usuario-guardar':
-        guardar_usuario();
+        (new AuthControlador())->guardarUsuario();
         break;
     case 'usuario-eliminar':
-        eliminar_usuario();
+        (new AuthControlador())->eliminarUsuario();
         break;
     case 'clientes':
-        clientes_listar();
+        (new ClientesControlador())->listar();
         break;
     case 'cliente-guardar':
-        clientes_guardar();
+        (new ClientesControlador())->guardar();
         break;
     case 'cliente-eliminar':
-        clientes_eliminar();
+        (new ClientesControlador())->eliminar();
         break;
     case 'oportunidades':
-        oportunidades_listar();
+        (new OportunidadesControlador())->listar();
         break;
     case 'oportunidad-guardar':
-        oportunidades_guardar();
+        (new OportunidadesControlador())->guardar();
         break;
     case 'oportunidad-eliminar':
-        oportunidades_eliminar();
+        (new OportunidadesControlador())->eliminar();
         break;
     case 'oportunidad-estado':
-        oportunidades_cambiar_estado();
+        (new OportunidadesControlador())->cambiarEstado();
         break;
     case 'actividades':
-        actividades_listar();
+        (new ActividadesControlador())->listar();
         break;
     case 'actividad-guardar':
-        actividades_guardar();
+        (new ActividadesControlador())->guardar();
         break;
     case 'actividad-completar':
-        actividades_completar();
+        (new ActividadesControlador())->completar();
         break;
+    default:
+        http_response_code(404);
+        echo 'Página no encontrada!!';
 }
