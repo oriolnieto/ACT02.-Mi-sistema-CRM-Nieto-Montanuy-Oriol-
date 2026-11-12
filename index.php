@@ -14,54 +14,54 @@ $ruta = isset($_GET['ruta']) ? $_GET['ruta'] : 'login';
 
 switch ($ruta) {
     case 'login':
-        (new AuthControlador())->login();
+        login();
         break;
     case 'registro':
-        (new AuthControlador())->registro();
+        registro();
         break;
     case 'logout':
-        (new AuthControlador())->logout();
+        logout();
         break;
     case 'dashboard':
-        (new AuthControlador())->dashboard();
+        dashboard();
         break;
     case 'usuarios':
-        (new AuthControlador())->usuarios();
+        usuarios();
         break;
     case 'usuario-guardar':
-        (new AuthControlador())->guardarUsuario();
+        guardar_usuario();
         break;
     case 'usuario-eliminar':
-        (new AuthControlador())->eliminarUsuario();
+        eliminar_usuario();
         break;
     case 'clientes':
-        (new ClientesControlador())->listar();
+        clientes_listar();
         break;
     case 'cliente-guardar':
-        (new ClientesControlador())->guardar();
+        clientes_guardar();
         break;
     case 'cliente-eliminar':
-        (new ClientesControlador())->eliminar();
+        clientes_eliminar();
         break;
     case 'oportunidades':
-        (new OportunidadesControlador())->listar();
+        oportunidades_listar();
         break;
     case 'oportunidad-guardar':
-        (new OportunidadesControlador())->guardar();
+        oportunidades_guardar();
         break;
     case 'oportunidad-eliminar':
-        (new OportunidadesControlador())->eliminar();
+        oportunidades_eliminar();
         break;
     case 'oportunidad-estado':
-        (new OportunidadesControlador())->cambiarEstado();
+        oportunidades_cambiar_estado();
         break;
     case 'actividades':
-        (new ActividadesControlador())->listar();
+        actividades_listar();
         break;
     case 'actividad-guardar':
-        (new ActividadesControlador())->guardar();
+        actividades_guardar();
         break;
     case 'actividad-completar':
-        (new ActividadesControlador())->completar();
+        actividades_completar();
         break;
 }

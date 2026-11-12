@@ -6,7 +6,7 @@
 	define("NAME_DB", "mvc_crm");
 
     //crear la conexió a la base de dades
-	$conexion = new mysqli(
+	$conexion = mysqli_connect(
 		constant("HOST_DB"),
 		constant("USER_DB"),
 		constant("PASS_DB"),
