@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2026 a las 18:37:25
+-- Tiempo de generación: 17-11-2026 a las 19:01:30
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -37,6 +37,13 @@ CREATE TABLE `actividades` (
   `usuario_responsable` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `actividades`
+--
+
+INSERT INTO `actividades` (`id_tarea`, `id_oportunidad`, `id_cliente`, `descripcion`, `fecha`, `estado`, `usuario_responsable`) VALUES
+(1, NULL, 3, 'porquetamolodesiempre', '2006-12-31', 'completada', 4);
+
 -- --------------------------------------------------------
 
 --
@@ -58,7 +65,9 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nombre_completo`, `email`, `tlf`, `empresa`, `fecha_registro`, `usuario_responsable`) VALUES
-(1, 'boloixet', 'boloixet@gmail.com', '32333', 'boloixet', '2026-11-09', 1);
+(1, 'boloixet', 'boloixet@gmail.com', '32333', 'boloixet', '2026-11-09', 1),
+(2, 'porquetamolodesiempre', 'lamineyamal17morad@gmail.com', '53462547246', 'porquetamolodesiempre', '2026-11-17', 3),
+(3, 'porquetamolodesiempre', 'oriolnieto2006@alumnes.ilerna.com', '53462547246', 'porquetamolodesiempre', '2026-11-17', 4);
 
 -- --------------------------------------------------------
 
@@ -76,6 +85,13 @@ CREATE TABLE `oportunidades` (
   `fecha_creacion` date NOT NULL,
   `usuario_responsable` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `oportunidades`
+--
+
+INSERT INTO `oportunidades` (`id_oportunidad`, `id_cliente`, `titulo`, `descripcion`, `valor_estimado`, `estado`, `fecha_creacion`, `usuario_responsable`) VALUES
+(1, 2, 'porquetamolodesiempre', 'porquetamolodesiempre', 2.00, 'perdida', '2026-11-17', 3);
 
 -- --------------------------------------------------------
 
@@ -99,7 +115,9 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id_usuario`, `usuario`, `nombre`, `apellidos`, `email`, `password`, `rol`) VALUES
 (1, 'boloncho', 'boloncho', 'boloncho', 'boloncho@gmail.com', '$2y$10$aufvc.k3V7kDBCHNePwmTewFUdZgbLk/ahTNSL7x2FrMdPB5Eet.e', 'vendedor'),
-(2, 'admin', 'Administrador', 'Principal', 'admin@crm.com', '$2y$10$ZcGofA2bZG0JodTjz25AbOZxz5.zeXIX4z1frkEk58LdoytUoHKFy', 'admin');
+(2, 'admin', 'Administrador', 'Principal', 'admin@crm.com', '$2y$10$ZcGofA2bZG0JodTjz25AbOZxz5.zeXIX4z1frkEk58LdoytUoHKFy', 'admin'),
+(3, 'porquetamolodesiempre', 'porquetamolodesiempre', 'porquetamolodesiempre', 'porquetamolodesiempre@gmail.com', '$2y$10$ZdebBxXAq29NBgFbx8sgyO84ix1w7FKfaBc2lkWXXkXc5Y5Hf8fHu', 'vendedor'),
+(4, 'peretxuuu', 'peretxuuu', 'peretxuuu', 'peretxuuu@gmail.com', '$2y$10$eGQiE6aHhuu6sq3h7Li.cu7IT3vXx9tk/20rFCIqYnDFgzJFAGcDW', 'vendedor');
 
 --
 -- Índices para tablas volcadas
@@ -145,25 +163,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  MODIFY `id_tarea` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tarea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `oportunidades`
 --
 ALTER TABLE `oportunidades`
-  MODIFY `id_oportunidad` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_oportunidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
