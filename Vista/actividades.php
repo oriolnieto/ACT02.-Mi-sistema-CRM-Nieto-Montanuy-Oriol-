@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="Vista/estilos.css">
     <title>PaddockCRM / Actividades</title>
 </head>
 <body>

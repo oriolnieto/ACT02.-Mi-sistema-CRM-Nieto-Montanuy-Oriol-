@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>PaddockCRM / Registro</title></head><body>
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="Vista/estilos.css"><title>PaddockCRM / Registro</title></head><body>
 <h1>Registro de vendedor</h1>
 <?php if (!empty($error)) echo '<p>' . $error . '</p>'; ?>
 <form method="post" action="index.php?ruta=registro">
