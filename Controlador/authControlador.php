@@ -40,7 +40,7 @@ class AuthControlador {
     }
 
     public function dashboard() {
-        self::requiereLogin();
+        AuthControlador::requiereLogin();
         $totalClientes = Cliente::total();
         $oportunidades = Oportunidad::resumen();
         $actividadesPendientes = Actividad::pendientes();
@@ -49,7 +49,7 @@ class AuthControlador {
     }
 
     public function usuarios() {
-        self::requiereLogin();
+        AuthControlador::requiereLogin();
         if ($_SESSION['rol'] != 'admin') {
             header('Location: index.php?ruta=dashboard'); exit;
         }
@@ -57,7 +57,7 @@ class AuthControlador {
     }
 
     public function guardarUsuario() {
-        self::requiereLogin();
+        AuthControlador::requiereLogin();
         if ($_SESSION['rol'] != 'admin') {
             header('Location: index.php?ruta=dashboard'); exit;
         }
@@ -85,7 +85,7 @@ class AuthControlador {
     }
 
     public function eliminarUsuario() {
-        self::requiereLogin();
+        AuthControlador::requiereLogin();
         if ($_SESSION['rol'] != 'admin') {
             header('Location: index.php?ruta=dashboard'); exit;
         }
