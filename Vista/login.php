@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><title>PaddockCRM / Login</title></head><body>
 <h1>Iniciar sesión</h1>
-<?php if ($error) echo '<p>' . $error . '</p>'; ?>
+<?php if (!empty($error)) echo '<p>' . $error . '</p>'; ?>
 <form method="post" action="index.php?ruta=login">
     Usuario: <input type="text" name="usuario" required><br>
     Contraseña: <input type="password" name="password" required><br>

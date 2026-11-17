@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><title>PaddockCRM / Registro</title></head><body>
 <h1>Registro de vendedor</h1>
-<?php if ($error) echo '<p>' . $error . '</p>'; ?>
+<?php if (!empty($error)) echo '<p>' . $error . '</p>'; ?>
 <form method="post" action="index.php?ruta=registro">
     Usuario: <input name="usuario" required><br>
     Nombre: <input name="nombre" required><br>

@@ -3,7 +3,9 @@ class AuthControlador {
     public function login() {
         $error = '';
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $user = Usuario::autenticar(trim($_POST['usuario']), $_POST['password']);
+            $usuario = trim($_POST['usuario'] ?? '');
+            $password = $_POST['password'] ?? '';
+            $user = Usuario::autenticar($usuario, $password);
             if ($user) {
                 session_regenerate_id(true);
                 $_SESSION['id_usuario'] = $user['id_usuario'];
@@ -18,9 +20,9 @@ class AuthControlador {
     public function registro() {
         $error = '';
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $datos = ['usuario'=>trim($_POST['usuario']), 'nombre'=>trim($_POST['nombre']),
-                'apellidos'=>trim($_POST['apellidos']), 'email'=>trim($_POST['email']),
-                'password'=>$_POST['password'], 'rol'=>'vendedor'];
+            $datos = ['usuario'=>trim($_POST['usuario'] ?? ''), 'nombre'=>trim($_POST['nombre'] ?? ''),
+                'apellidos'=>trim($_POST['apellidos'] ?? ''), 'email'=>trim($_POST['email'] ?? ''),
+                'password'=>$_POST['password'] ?? '', 'rol'=>'vendedor'];
             if (in_array('', [$datos['usuario'], $datos['nombre'], $datos['apellidos'], $datos['email'], $datos['password']], true)) {
                 $error = 'Todos los campos son obligatorios.';
             } elseif (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
@@ -35,6 +37,12 @@ class AuthControlador {
     }
 
     public function logout() {
+        $_SESSION = [];
+        if (ini_get('session.use_cookies')) {
+            $parametros = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000, $parametros['path'],
+                $parametros['domain'], $parametros['secure'], $parametros['httponly']);
+        }
         session_destroy();
         header('Location: index.php?ruta=login'); exit;
     }
@@ -53,7 +61,11 @@ class AuthControlador {
         if ($_SESSION['rol'] != 'admin') {
             header('Location: index.php?ruta=dashboard'); exit;
         }
-        header('Location: index.php?ruta=dashboard'); exit;
+        $usuarios = Usuario::todos();
+        $totalClientes = Cliente::total();
+        $oportunidades = Oportunidad::resumen();
+        $actividadesPendientes = Actividad::pendientes();
+        require __DIR__ . '/../Vista/dashboard.php';
     }
 
     public function guardarUsuario() {
@@ -61,9 +73,10 @@ class AuthControlador {
         if ($_SESSION['rol'] != 'admin') {
             header('Location: index.php?ruta=dashboard'); exit;
         }
-        $datos = ['id_usuario'=>(int)($_POST['id_usuario'] ?? 0), 'usuario'=>trim($_POST['usuario']), 'nombre'=>trim($_POST['nombre']),
-            'apellidos'=>trim($_POST['apellidos']), 'email'=>trim($_POST['email']),
-            'password'=>$_POST['password'], 'rol'=>$_POST['rol']];
+        $datos = ['id_usuario'=>(int)($_POST['id_usuario'] ?? 0), 'usuario'=>trim($_POST['usuario'] ?? ''),
+            'nombre'=>trim($_POST['nombre'] ?? ''), 'apellidos'=>trim($_POST['apellidos'] ?? ''),
+            'email'=>trim($_POST['email'] ?? ''), 'password'=>$_POST['password'] ?? '',
+            'rol'=>$_POST['rol'] ?? 'vendedor'];
         if ($datos['usuario'] === '' || $datos['nombre'] === '' || $datos['apellidos'] === '' || $datos['email'] === '') {
             $error = 'Los datos del usuario son obligatorios.';
         } elseif (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
@@ -89,8 +102,9 @@ class AuthControlador {
         if ($_SESSION['rol'] != 'admin') {
             header('Location: index.php?ruta=dashboard'); exit;
         }
-        if ((int)$_GET['id'] !== (int)$_SESSION['id_usuario']) {
-            Usuario::eliminar((int)$_GET['id'], $_SESSION['id_usuario']);
+        $id = (int)($_GET['id'] ?? 0);
+        if ($id > 0 && $id !== (int)$_SESSION['id_usuario']) {
+            Usuario::eliminar($id, $_SESSION['id_usuario']);
         }
         header('Location: index.php?ruta=usuarios'); exit;
     }

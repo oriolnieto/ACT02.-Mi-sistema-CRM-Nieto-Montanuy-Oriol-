@@ -9,8 +9,9 @@ class ClientesControlador {
 
     public function guardar() {
         AuthControlador::requiereLogin();
-        $datos = ['id_cliente'=>(int)($_POST['id_cliente'] ?? 0), 'nombre_completo'=>trim($_POST['nombre_completo']),
-            'email'=>trim($_POST['email']), 'tlf'=>trim($_POST['tlf']), 'empresa'=>trim($_POST['empresa']),
+        $datos = ['id_cliente'=>(int)($_POST['id_cliente'] ?? 0), 'nombre_completo'=>trim($_POST['nombre_completo'] ?? ''),
+            'email'=>trim($_POST['email'] ?? ''), 'tlf'=>trim($_POST['tlf'] ?? ''),
+            'empresa'=>trim($_POST['empresa'] ?? ''),
             'usuario_responsable'=>$_SESSION['id_usuario']];
         Cliente::guardar($datos, $_SESSION['id_usuario'], $_SESSION['rol'] == 'admin');
         header('Location: index.php?ruta=clientes'); exit;
@@ -18,7 +19,10 @@ class ClientesControlador {
 
     public function eliminar() {
         AuthControlador::requiereLogin();
-        Cliente::eliminar((int)$_GET['id'], $_SESSION['id_usuario'], $_SESSION['rol'] == 'admin');
+        $id = (int)($_GET['id'] ?? 0);
+        if ($id > 0) {
+            Cliente::eliminar($id, $_SESSION['id_usuario'], $_SESSION['rol'] == 'admin');
+        }
         header('Location: index.php?ruta=clientes'); exit;
     }
 }

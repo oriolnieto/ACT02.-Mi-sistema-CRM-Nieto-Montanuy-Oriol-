@@ -31,6 +31,9 @@
         Empresa: <input type="text" name="empresa" required>
         <input type="submit" value="Guardar">
     </form>
+    <?php foreach ($clientes as $cliente) { ?>
+        <form id="cliente-<?= $cliente['id_cliente'] ?>" method="post" action="index.php?ruta=cliente-guardar"></form>
+    <?php } ?>
     <table border="1">
         <tr>
             <th>Nombre</th><th>Email</th><th>Teléfono</th><th>Empresa</th>
@@ -38,17 +41,15 @@
         </tr>
         <?php foreach ($clientes as $cliente) { ?>
             <tr>
-                <form method="post" action="index.php?ruta=cliente-guardar">
-                    <input type="hidden" name="id_cliente" value="<?= $cliente['id_cliente'] ?>">
-                    <td><input type="text" name="nombre_completo" value="<?= $cliente['nombre_completo'] ?>"></td>
-                    <td><input type="email" name="email" value="<?= $cliente['email'] ?>"></td>
-                    <td><input type="text" name="tlf" value="<?= $cliente['tlf'] ?>"></td>
-                    <td><input type="text" name="empresa" value="<?= $cliente['empresa'] ?>"></td>
+                    <input form="cliente-<?= $cliente['id_cliente'] ?>" type="hidden" name="id_cliente" value="<?= $cliente['id_cliente'] ?>">
+                    <td><input form="cliente-<?= $cliente['id_cliente'] ?>" type="text" name="nombre_completo" value="<?= $cliente['nombre_completo'] ?>"></td>
+                    <td><input form="cliente-<?= $cliente['id_cliente'] ?>" type="email" name="email" value="<?= $cliente['email'] ?>"></td>
+                    <td><input form="cliente-<?= $cliente['id_cliente'] ?>" type="text" name="tlf" value="<?= $cliente['tlf'] ?>"></td>
+                    <td><input form="cliente-<?= $cliente['id_cliente'] ?>" type="text" name="empresa" value="<?= $cliente['empresa'] ?>"></td>
                     <td><?= $cliente['fecha_registro'] ?></td>
                     <td><?= $cliente['responsable'] ?></td>
                     <td>
-                        <input type="submit" value="Actualizar">
-                        </form>
+                        <input form="cliente-<?= $cliente['id_cliente'] ?>" type="submit" value="Actualizar">
                         <a href="index.php?ruta=cliente-eliminar&id=<?= $cliente['id_cliente'] ?>">Eliminar</a>
                     </td>
             </tr>

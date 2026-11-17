@@ -22,16 +22,17 @@
         <input type="hidden" name="ruta" value="oportunidades">
         Estado:
         <select name="estado">
-            <option value="">Todos</option>
-            <option value="progreso">Progreso</option>
-            <option value="ganada">Ganada</option>
-            <option value="perdida">Perdida</option>
+            <option value="" <?= $estadoFiltro === '' ? 'selected' : '' ?>>Todos</option>
+            <option value="progreso" <?= $estadoFiltro === 'progreso' ? 'selected' : '' ?>>Progreso</option>
+            <option value="ganada" <?= $estadoFiltro === 'ganada' ? 'selected' : '' ?>>Ganada</option>
+            <option value="perdida" <?= $estadoFiltro === 'perdida' ? 'selected' : '' ?>>Perdida</option>
         </select>
         Cliente:
         <select name="cliente">
-            <option value="">Todos</option>
+            <option value="" <?= $clienteFiltro === '' ? 'selected' : '' ?>>Todos</option>
             <?php foreach ($clientes as $cliente) { ?>
-                <option value="<?= $cliente['id_cliente'] ?>">
+                <option value="<?= $cliente['id_cliente'] ?>"
+                    <?= (string)$cliente['id_cliente'] === (string)$clienteFiltro ? 'selected' : '' ?>>
                     <?= $cliente['nombre_completo'] ?>
                 </option>
             <?php } ?>
@@ -61,6 +62,9 @@
         <input type="submit" value="Guardar">
     </form>
 
+    <?php foreach ($oportunidades as $oportunidad) { ?>
+        <form id="oportunidad-<?= $oportunidad['id_oportunidad'] ?>" method="post" action="index.php?ruta=oportunidad-guardar"></form>
+    <?php } ?>
     <table border="1">
         <tr>
             <th>Cliente</th>
@@ -72,11 +76,10 @@
         </tr>
         <?php foreach ($oportunidades as $oportunidad) { ?>
             <tr>
-                <form method="post" action="index.php?ruta=oportunidad-guardar">
-                    <input type="hidden" name="id_oportunidad"
+                    <input form="oportunidad-<?= $oportunidad['id_oportunidad'] ?>" type="hidden" name="id_oportunidad"
                            value="<?= $oportunidad['id_oportunidad'] ?>">
                     <td>
-                        <select name="id_cliente">
+                        <select form="oportunidad-<?= $oportunidad['id_oportunidad'] ?>" name="id_cliente">
                             <?php foreach ($clientes as $cliente) { ?>
                                 <option value="<?= $cliente['id_cliente'] ?>"
                                     <?= $cliente['id_cliente'] == $oportunidad['id_cliente'] ? 'selected' : '' ?>>
@@ -86,15 +89,15 @@
                         </select>
                     </td>
                     <td>
-                        <input type="text" name="titulo"
+                        <input form="oportunidad-<?= $oportunidad['id_oportunidad'] ?>" type="text" name="titulo"
                                value="<?= $oportunidad['titulo'] ?>">
                     </td>
                     <td>
-                        <input type="number" step="0.01" name="valor_estimado"
+                        <input form="oportunidad-<?= $oportunidad['id_oportunidad'] ?>" type="number" step="0.01" name="valor_estimado"
                                value="<?= $oportunidad['valor_estimado'] ?>">
                     </td>
                     <td>
-                        <select name="estado">
+                        <select form="oportunidad-<?= $oportunidad['id_oportunidad'] ?>" name="estado">
                             <option value="progreso"
                                 <?= $oportunidad['estado'] === 'progreso' ? 'selected' : '' ?>>
                                 Progreso
@@ -111,10 +114,9 @@
                     </td>
                     <td><?= $oportunidad['fecha_creacion'] ?></td>
                     <td>
-                        <input type="text" name="descripcion"
+                        <input form="oportunidad-<?= $oportunidad['id_oportunidad'] ?>" type="text" name="descripcion"
                                value="<?= $oportunidad['descripcion'] ?>">
-                        <input type="submit" value="Actualizar">
-                </form>
+                        <input form="oportunidad-<?= $oportunidad['id_oportunidad'] ?>" type="submit" value="Actualizar">
                         <a href="index.php?ruta=oportunidad-eliminar&id=<?= $oportunidad['id_oportunidad'] ?>">
                             Eliminar
                         </a>

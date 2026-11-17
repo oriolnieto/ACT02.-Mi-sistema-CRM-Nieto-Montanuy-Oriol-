@@ -23,8 +23,8 @@ class ActividadesControlador {
         if ($clienteId > 0 && !Cliente::puedeGestionar($clienteId, $_SESSION['id_usuario'], $admin)) {
             header('Location: index.php?ruta=actividades'); exit;
         }
-        $datos = ['id_oportunidad'=>$_POST['id_oportunidad'], 'id_cliente'=>$_POST['id_cliente'],
-            'descripcion'=>trim($_POST['descripcion']), 'fecha'=>$_POST['fecha'],
+        $datos = ['id_oportunidad'=>$_POST['id_oportunidad'] ?? '', 'id_cliente'=>$_POST['id_cliente'] ?? '',
+            'descripcion'=>trim($_POST['descripcion'] ?? ''), 'fecha'=>$_POST['fecha'] ?? '',
             'usuario_responsable'=>$_SESSION['id_usuario']];
         Actividad::guardar($datos);
         header('Location: index.php?ruta=actividades'); exit;
@@ -32,7 +32,10 @@ class ActividadesControlador {
 
     public function completar() {
         AuthControlador::requiereLogin();
-        Actividad::completar((int)$_GET['id'], $_SESSION['id_usuario'], $_SESSION['rol'] == 'admin');
+        $id = (int)($_GET['id'] ?? 0);
+        if ($id > 0) {
+            Actividad::completar($id, $_SESSION['id_usuario'], $_SESSION['rol'] == 'admin');
+        }
         header('Location: index.php?ruta=actividades'); exit;
     }
 }
