@@ -115,7 +115,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id_usuario`, `usuario`, `nombre`, `apellidos`, `email`, `password`, `rol`) VALUES
 (1, 'boloncho', 'boloncho', 'boloncho', 'boloncho@gmail.com', '$2y$10$aufvc.k3V7kDBCHNePwmTewFUdZgbLk/ahTNSL7x2FrMdPB5Eet.e', 'vendedor'),
-(2, 'admin', 'Administrador', 'Principal', 'admin@crm.com', '$2y$10$ZcGofA2bZG0JodTjz25AbOZxz5.zeXIX4z1frkEk58LdoytUoHKFy', 'admin'),
+(2, 'admin', 'Administrador', 'Principal', 'admin@crm.com', '$2y$10$9qNCh3jJXMvnUa/jDvm85uhkVtQG1aeT2piDkUKKnS1mg7v62x8pO', 'admin'),
 (3, 'porquetamolodesiempre', 'porquetamolodesiempre', 'porquetamolodesiempre', 'porquetamolodesiempre@gmail.com', '$2y$10$ZdebBxXAq29NBgFbx8sgyO84ix1w7FKfaBc2lkWXXkXc5Y5Hf8fHu', 'vendedor'),
 (4, 'peretxuuu', 'peretxuuu', 'peretxuuu', 'peretxuuu@gmail.com', '$2y$10$eGQiE6aHhuu6sq3h7Li.cu7IT3vXx9tk/20rFCIqYnDFgzJFAGcDW', 'vendedor');
 
